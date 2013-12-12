@@ -14,6 +14,9 @@ namespace _33.Models
         public string IssueTrackerName { get; set; }
         public string IssueTrackerAddress { get; set; }
 
+        public string Name { get; set; }
+        public bool Current { get; set; }
+
         public virtual ICollection<QuickLink> QuickLinks { get; set; }
 
     }

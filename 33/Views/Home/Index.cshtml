@@ -1,40 +1,49 @@
-﻿@model _33.Models.HomeModel
+﻿
+@model _33.Models.HomeModel
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Project home page";
+    if (Model != null && Model.BuildServerName.Contains("TeamCity")) 
+    {
+        ViewBag.Teamcity = Model.BuildServerAddress;
+    }
 }
-@section featured {
-    <section class="featured">
-        <div class="content-wrapper">
-            <hgroup class="title">
-                <h1>@ViewBag.Title.</h1>
-                <h2>@ViewBag.Message</h2>
-            </hgroup>
-            
-        </div>
-    </section>
+
+@section styles {
+    @if (!string.IsNullOrWhiteSpace(@ViewBag.Teamcity))
+    {
+        <style type="text/css">
+            @@import "http://@ViewBag.Teamcity/css/status/externalStatus.css";
+        </style>
+    }
 }
+
 @if (@Model != null)
-{
-    <h3>
-        Qucik links:</h3>
-    <ol class="round">
-        <li class="one">
-            <h5>
-                Bulid Server</h5>
-            <a href=@Model.BuildServerAddress>@Model.BuildServerName</a> </li>
-        <li class="two">
-            <h5>
-                Issue Tracker</h5>
-            <a href=@Model.IssueTrackerAddress>@Model.IssueTrackerName</a>
-            <li class="three">
-                <h5>
-                    Other</h5>
-                <ul>
-                    @foreach (_33.Models.QuickLink item in Model.QuickLinks)
-                    {
-                        <li>@Html.ActionLink(item.LinkText, item.ActionName, item.ContollerName)</li>
-                    }
-                </ul>
-            </li>
-    </ol>
+{    <hgroup class="title">
+        <h1>@ViewBag.Title.</h1>
+        <h2>@ViewBag.Message</h2>
+    </hgroup>
+    
+    <section class="bloom">
+        <a href=@Model.BuildServerAddress class="tile red">
+            <span>@Model.BuildServerName</span>
+        </a>
+        <a href=@Model.IssueTrackerAddress class="tile blue">
+            <span>@Model.IssueTrackerName</span>
+        </a>
+
+        @foreach (_33.Models.QuickLink item in Model.QuickLinks)
+        {
+            <a href=@Url.Action(item.ActionName, item.ContollerName) class="tile yellow">
+                <span>@item.LinkText</span>
+            </a>
+        }
+    </section>
+    
+    if (!string.IsNullOrWhiteSpace(ViewBag.Teamcity))
+    {
+        <div id="teamcitystatus">
+            <h3>Teamcity status</h3>
+            <script type="text/javascript" src="@ViewBag.Teamcity/externalStatus.html?js=1"></script>
+        </div>
+    }
 }

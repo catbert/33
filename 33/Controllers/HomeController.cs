@@ -13,9 +13,16 @@ namespace _33.Controllers
         
         public ActionResult Index()
         {
-            ViewBag.Message = "Development stuff.";
+            var model = db.HomeModels.FirstOrDefault(m => m.Current);
 
-            var model = db.HomeModels.FirstOrDefault();
+            if (model != null)
+            {
+                ViewBag.Message = model.Name;
+            }
+            else
+            {
+                ViewBag.Message = "No project selected.";
+            }
 
             return View(model);
         }

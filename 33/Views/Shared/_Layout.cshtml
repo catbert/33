@@ -10,17 +10,18 @@
 
         @Scripts.Render("~/bundles/jquery")
         @RenderSection("scripts", required: false)
+        @RenderSection("styles", required: false)
     </head>
     <body>
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("33", "Index", "Home")</p>
+                    <p class="site-title">@Html.ActionLink("NICE Sys Inform Reporter Modul", "Index", "Home")</p>
                 </div>
                 <div class="float-right">
-                    <section id="login">
+                    <!--<section id="login">
                         @Html.Partial("_LoginPartial")
-                    </section>
+                    </section>-->
                     <nav>
                         <ul id="menu">
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
@@ -32,7 +33,7 @@
             </div>
         </header>
         <div id="body">
-            @RenderSection("featured", required: false)
+            <!--@RenderSection("featured", required: false)-->
             <section class="content-wrapper main-content clear-fix">
                 @RenderBody()
             </section>
